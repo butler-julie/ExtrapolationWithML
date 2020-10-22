@@ -22,8 +22,6 @@ from RidgeRegression import RidgeRegressionAnalysis
 from KernelRidgeRegression import KernelRidgeRegressionAnalysis
 # Support methods, including graphing capabilities
 from RegressionSupport import *
-# Changing the import directory
-sys.path.append('../../DataSets/')
 # Data sets (mostly physics related)
 from DataSets import *
 from ElectronGas import *
