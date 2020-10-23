@@ -12,7 +12,10 @@
 ##############################
 # IMPORTS
 ##############################
-# THIRD_PARTY IMPORTS
+# SYSTEM LEVEL IMPORTS
+import sys
+
+# THIRD-PARTY IMPORTS
 # For matrices and calculations
 import numpy as np
 # For machine learning (backend for keras)
@@ -31,6 +34,8 @@ from timeit import default_timer as timer
 # For graphing
 import matplotlib.pyplot as plt
 
+# Changing the import directory
+sys.path.append('../../DataSets/')
 # LOCAL IMPORTS
 # Encoded data sets but can apply this code to any data set
 from Datesets import *
