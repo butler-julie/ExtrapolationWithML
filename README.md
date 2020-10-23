@@ -5,5 +5,5 @@ Repository is currently under construction.  All codes contained within should w
 Data set importing will currently not work due to restructuring being in progress
 
 ## UNDER CONSTRUCTION
-* For an explanation of the codes pertaining to regression algorithms see [this file](RegressionCodes.md)
-* For an explanation of the codes pertaining to recurrent neural networks algorithms see [this file](RecurrentNeuralNetworkCodes.md)
+* For an explanation of the codes pertaining to regression algorithms see [this file](Regression/RegressionCodes.md)
+* For an explanation of the codes pertaining to recurrent neural networks algorithms see [this file](RecurrentNeuralNetworks/RecurrentNeuralNetworkCodes.md)
