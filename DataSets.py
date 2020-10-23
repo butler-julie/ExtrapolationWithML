@@ -25,6 +25,13 @@
 #   Pairing Model (4p4h):
 #       Full Hamiltonian Evolution
 #       Ground State Energy Evolution
+# Generated Function Data Sets
+#   Linear
+#   Polynomial of Nth degree
+#   Sine
+#   Cosine
+#   Tangent
+#   Arctangent
 #################################################
 
 #############################
@@ -286,6 +293,70 @@ def TwoDimElectronGasN26 ():
     y_tot = np.array([-0.67039E-01, -0.11728E+00, -0.14399E+00, -0.16185E+00, -0.17787E+00, -0.18554E+00, -0.18859E+00, -0.19101E+00, -0.19336E+00, -0.19458E+00, -0.19616E+00, -0.19721E+00, -0.19776E+00, -0.19876E+00, -0.19913E+00, -0.19959E+00, -0.19988E+00, -0.20039E+00, -0.20068E+00, -0.20153E+00, -0.20229E+00, -0.20309E+00, -0.20354E+00, -0.20381E+00, -0.20400E+00, -0.20414E+00, -0.20424E+00, -0.20431E+00, -0.20437E+00, -0.20442E+00, -0.20447E+00, -0.20450E+00, -0.20453E+00])
     return data_name, training_dim, X_tot, y_tot
 
+#################################################
+# GENERATED FUNCTION DATA SETS
+#################################################
+
+##############################
+# LINEAR
+##############################
+def linear (scale_factor):
+    date_name = 'Linear'
+    training_dim = 50
+    X_tot = np.arange(-1, 1, 0.01)
+    y_tot = scale_factor*X_tot
+    return data_name, training_dim, X_tot, y_tot
+
+##############################
+# POLYNOMIAL   
+##############################
+def linear (scale_factor, degree):
+    date_name = 'Polynomial'
+    training_dim = 50
+    X_tot = np.arange(-1, 1, 0.01)
+    y_tot = scale_factor*X_tot**degree
+    return data_name, training_dim, X_tot, y_tot
+
+##############################
+# SINE
+##############################
+def linear (scale_factor1, scale_factor2):
+    date_name = 'Sine'
+    training_dim = 50
+    X_tot = np.arange(-1, 1, 0.01)
+    y_tot = scale_factor1*np.sin(scale_factor2*X_tot)
+    return data_name, training_dim, X_tot, y_tot
+    
+##############################
+# COSINE
+##############################
+def linear (scale_factor1, scale_factor2):
+    date_name = 'Cosine'
+    training_dim = 50
+    X_tot = np.arange(-1, 1, 0.01)
+    y_tot = scale_factor1*np.cos(scale_factor2*X_tot)
+    return data_name, training_dim, X_tot, y_tot
+
+##############################
+# TANGENT
+##############################
+def linear (scale_factor1, scale_factor2):
+    date_name = 'Tangent'
+    training_dim = 50
+    X_tot = np.arange(-1, 1, 0.01)
+    y_tot = scale_factor1*np.tan(scale_factor2*X_tot)
+    return data_name, training_dim, X_tot, y_tot
+
+##############################
+# ARCTANGENT
+##############################
+def linear (scale_factor1, scale_factor2):
+    date_name = 'Arctangent'
+    training_dim = 50
+    X_tot = np.arange(-1, 1, 0.01)
+    y_tot = scale_factor1*np.arctan(scale_factor2*X_tot)
+    return data_name, training_dim, X_tot, y_tot
+    
 
 
 
