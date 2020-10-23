@@ -31,25 +31,55 @@ from RegressionSupport import *
 from DataSets import *
 from ElectronGas import *
 
+#############################
+# BOOLEANS FOR REGRESSION ALGORITHM CHOICE
+#############################
+# True case is to perform that type of regression
 isLinearRegression = False
 isRidgeRegression = False
 isKernelRidgeRegression = False
 
+#############################
+# BOOLEANS FOR OPTIMIZING PARAMETERS
+#############################
+# True case means optimized parameters are optimized parameters are being provided
+# False means the code needs to run a hyperparameter tuning algorithms to find them
 isOptimalParameters = True
+# Optimal linear regression parameters
 params_lr = [True, True]
+# Optimal ridge regression parameters
 params_rr = [True, 2.0165510387247442e-48, 'saga']
+# Optimal kernel ridge regression parameters
 params_krr = []
 
+#############################
+# BOOLEAN FOR CONVERGENCE
+#############################
+# True case means the algorithms extrapolates until the data set converges to a set 
+# threshold
 isConvergence = True
 convergence_threshold = 1e-5
+# If not convergence then extrapolate to this many total points (NOT YET IMPLEMENTED!!!!!!!!!!)
+total_points = 100
 
+#############################
+# BOOLEAN FOR AUTOREGRESSION
+#############################
+# True case means that autoregression is performed during the extrapolation
 isAutoRegression = True
 
+#############################
+# KNOWN DATA SET
+#############################
+# Imported from file or generated
 name, dim, X_tot, y_tot = rs_1_N_26()
-dim = 30
 
+#############################
+# FORMAT THE TRAINING DATA
+#############################
+# Using the entire data set as training data for the extrapolation
 X_sequential, y_sequential = time_series_data (y_tot)
-total_points = 100
+
 
 if isOptimalParameters:
     if isLinearRegression:
