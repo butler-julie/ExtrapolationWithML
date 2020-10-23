@@ -1,3 +1,18 @@
+##################################################
+# Simple RNN Example
+# Julie Butler Hartley
+# Date Created: October 22, 2020
+# Last Modified: October 22, 2020
+# Version 0.8.0
+#
+# A code that utilizes a simple recurrent neural network from Keras and time series
+# forecasting data formatting to perform extrapolations.
+##################################################
+
+##############################
+# IMPORTS
+##############################
+# THIRD_PARTY IMPORTS
 # For matrices and calculations
 import numpy as np
 # For machine learning (backend for keras)
@@ -10,44 +25,34 @@ import keras
 from keras.layers import Input
 from keras.models import Model, Sequential
 from keras.layers.core import Dense, Activation 
-
-from keras.layers.recurrent import SimpleRNN, LSTM
+from keras.layers.recurrent import SimpleRNN
+# For timing purposes
 from timeit import default_timer as timer
+# For graphing
 import matplotlib.pyplot as plt
 
-# Vary Dimension
-datatype='VaryDimension'
-X_tot = np.arange(2, 42, 2)
-y_tot = np.array([-0.03077640549, -0.08336233266, -0.1446729567, -0.2116753732, -0.2830637392, -0.3581341341, -0.436462435, -0.5177783846,
-	-0.6019067271, -0.6887363571, -0.7782028952, -0.8702784034, -0.9649652536, -1.062292565, -1.16231451, 
-	-1.265109911, -1.370782966, -1.479465113, -1.591317992, -1.70653767])
-
-# Vary Interaction Negative
-#datatype='VaryDimensionNegative'
-#X_tot = np.arange(-1, 0, 0.05)
-#y_tot = np.array([-1.019822621,-0.9373428759,-0.8571531335,-0.7793624503,-0.7040887974,
-#    -0.6314601306,-0.561615627,-0.4947071038,-0.4309007163,-0.3703789126,-0.3133427645,
-#    -0.2600147228,-0.2106419338,-0.1655002064,-0.1248988336,-0.08918647296,-0.05875839719,
-#    -0.03406548992,-0.01562553455,-0.004037522178])
+# LOCAL IMPORTS
+# Encoded data sets but can apply this code to any data set
+from Datesets import *
 
 
-# Vary Interaction Positive
-#datatype ='VaryDimensionPositive'
-#X_tot = np.arange(0.05, 0.85, 0.05)
-#y_tot = np.array([-0.004334904077,-0.01801896484,-0.04222576507,-0.07838310563,-0.128252924,
-#    -0.1940453966,-0.2785866456,-0.3855739487,-0.5199809785,-0.6887363571,-0.9019400869,-1.175251697,
-#    -1.535217909,-2.033720441,-2.80365727,-4.719209688])
-    
-
+##############################
+# DATA SET
+##############################
+# Get a string that represents the name of the data set, a recommended training 
+# dimension for the data, the total x data, and the total y data for a data set
+# the is encoded in the file DataSets.py
+# This code can be used with other data sets as long as a training dimension is supplied
+# with the name "dim", the x data is in a one dimensional numpy array named "X_tot", and the
+# y data is in a one dimensional numpy array called "y_tot".
+name, dim, X_tot, y_tot = VaryDimension()
+# Check to see if the data set is complete
 assert len(X_tot) == len(y_tot)
-print(len(X_tot))
 
-dim=12
 
-X_train = X_tot[:dim]
-y_train = y_tot[:dim]
-
+##############################
 # FORMAT_DATA
+##############################
 def format_data(data, length_of_sequence = 2):  
     """
         Inputs:
@@ -78,10 +83,19 @@ def format_data(data, length_of_sequence = 2):
 
     return rnn_input, rnn_output
 
-# Generate the training data for the RNN
+##############################
+# TRAINING DATA
+##############################
+# Generate the training data for the RNN using a sequence length of 2
+# Get the first dim points from the total data set to use for training
+X_train = X_tot[:dim]
+y_train = y_tot[:dim]
+# Formating the y component of the training data using the time series forecasting 
 rnn_input, rnn_training = format_data(y_train, 2)
 
-
+##############################
+# RNN
+##############################
 def rnn(length_of_sequences, batch_size = None, stateful = False):
     in_out_neurons = 1
     hidden_neurons = 200
@@ -99,7 +113,9 @@ def rnn(length_of_sequences, batch_size = None, stateful = False):
 
 
 
-
+##############################
+# CREATE THE RECURRENT NEURAL NETWORK
+##############################
 ## use the default values for batch_size, stateful
 model = rnn(length_of_sequences = rnn_input.shape[1])
 #model.summary()
