@@ -1,60 +1,100 @@
+##################################################
+# Electron Gas 
+# Julie Butler Hartley 
+# Date Created: October 22, 2020
+# Last Modified: October 23, 2020
+# Version 1.0.0
+#
+# Data generated from applying couple cluster theory to an infinite electron gas.  Data 
+# supplied by Morten Hjorth-Jensen.  Each method contains the number of orbitals as a 
+# function of correlations energy at various values of rs and N.  Note that these data 
+# sets differ from the data sets located in DataSets.py by the addition on an addition
+# return value, N.  Also note that many of these data sets are quite small, which can 
+# make machine learning challenging.
+##################################################
+
+##############################
+# IMPORTS
+##############################
+# THIRD-PARTY IMPORTS
+# For arrays
 import numpy as np
+
+##############################
+# RS = 0.1
+##############################
+# RS_0_1_N_74
 def rs_0_1_N_74():
+	N = 74
 	name = 'Electron_Gas_rs_0_1_N_74'
 	training_dim = 8
 	nOrbits = np.array([242, 394, 570, 730, 914, 1266, 1642, 2418, 3586, 5642])
 	correlation_energy = np.array([-0.19768E+00, -0.24844E+00, -0.27287E+00, -0.28353E+00, -0.29048E+00, -0.29765E+00, -0.30161E+00, -0.30567E+00, -0.30831E+00, -0.31021E+00])
 	assert len(nOrbits) == len(correlation_energy)
-	return name, training_dim, nOrbits, correlation_energy
+	return name, training_dim, nOrbits, correlation_energy, N
 
+# RS_0_1_N_98
 def rs_0_1_N_98():
+	N = 98
 	name = 'Electron_Gas_rs_0_1_N_98'
 	training_dim = 8
 	nOrbits = np.array([242, 394, 570, 730, 914, 1642, 2418, 3586, 5642])
 	correlation_energy = np.array([-0.17885E+00, -0.24386E+00, -0.27757E+00, -0.29325E+00, -0.30352E+00, -0.31946E+00, -0.32511E+00, -0.32873E+00, -0.33133E+00])
 	assert len(nOrbits) == len(correlation_energy)
-	return name, training_dim, nOrbits, correlation_energy
+	return name, training_dim, nOrbits, correlation_energy, N
 
+# RS_0_1_N_114
 def rs_0_1_N_114():
+	N = 114
 	name = 'Electron_Gas_rs_0_1_N_114'
 	training_dim = 8
 	nOrbits = np.array([242, 394, 570, 730, 914, 1642, 2418, 3586, 5642])
 	correlation_energy = np.array([-0.14637E+00, -0.21891E+00, -0.25798E+00, -0.27688E+00, -0.28956E+00, -0.30908E+00, -0.31587E+00, -0.32019E+00, -0.32327E+00])
 	assert len(nOrbits) == len(correlation_energy)
-	return name, training_dim, nOrbits, correlation_energy
+	return name, training_dim, nOrbits, correlation_energy, N
 
+# RS_0_1_N_138
 def rs_0_1_N_138():
+	N = 138
 	name = 'Electron_Gas_rs_0_1_N_138'
 	training_dim = 8
 	nOrbits = np.array([242, 394, 570, 730, 914, 1266, 1642, 2418, 3586, 5642])
 	correlation_energy = np.array([-0.10139E+00, -0.18351E+00, -0.22945E+00, -0.25259E+00, -0.26873E+00, -0.28530E+00, -0.29404E+00, -0.30264E+00, -0.30805E+00, -0.31187E+00])			
 	assert len(nOrbits) == len(correlation_energy)
-	return name, training_dim, nOrbits, correlation_energy
+	return name, training_dim, nOrbits, correlation_energy, N
 
+# RS_0_1_N_178
 def rs_0_1_N_178():
+	N = 178
 	name = 'Electron_Gas_rs_0_1_N_178'
 	training_dim = 8
 	nOrbits = np.array([242, 394, 570, 730, 914, 1642, 2418, 3586, 5642])
 	correlation_energy = np.array([-0.58766E-01, -0.15443E+00, -0.21036E+00, -0.23972E+00, -0.26108E+00, -0.29665E+00, -0.30862E+00, -0.31599E+00, -0.32111E+00])
 	assert len(nOrbits) == len(correlation_energy)
-	return name, training_dim, nOrbits, correlation_energy
+	return name, training_dim, nOrbits, correlation_energy, N
 
-
+##############################
+# RS = 0.5
+##############################
+# RS_0_5_N_10
 def rs_0_5_N_10():
+	N = 10
 	name = 'Electron_Gas_rs_0_5_N_10'
 	training_dim = 16
 	nOrbits = np.array([26, 50, 74, 98, 242, 394, 570, 914, 1266, 1642, 2010, 2418, 2810, 3210, 3586, 4418, 5202, 6482, 7738, 9946])
 	correlation_energy = np.array([-0.13744E+00, -0.19731E+00, -0.21989E+00, -0.22829E+00, -0.24149E+00, -0.24424E+00, -0.24551E+00, -0.24651E+00, -0.24696E+00, -0.24722E+00, -0.24737E+00, -0.24749E+00, -0.24757E+00, -0.24763E+00, -0.24768E+00, -0.24775E+00, -0.24779E+00, -0.24785E+00, -0.24788E+00, -0.24792E+00])
 	assert len(nOrbits) == len(correlation_energy)
-	return name, training_dim, nOrbits, correlation_energy
+	return name, training_dim, nOrbits, correlation_energy, N
 
+# rs_0_5_N_74
 def rs_0_5_N_74():
+	N = 74
 	name = 'Electron_Gas_rs_0_5_N_74'
 	training_dim = 8
 	nOrbits = np.array([242, 394, 570, 730, 914, 1266, 1642, 2418, 3586, 5642])
 	correlation_energy = np.array([-0.15357E+00, -0.19885E+00, -0.21935E+00, -0.22749E+00, -0.23250E+00, -0.23746E+00, -0.24012E+00, -0.24278E+00, -0.24447E+00, -0.24567E+00])
 	assert len(nOrbits) == len(correlation_energy)
-	return name, training_dim, nOrbits, correlation_energy
+	return name, training_dim, nOrbits, correlation_energy, N
 
 def rs_0_5_N_98():
 	name = 'Electron_Gas_rs_0_5_N_98'
@@ -88,6 +128,9 @@ def rs_0_5_N_178():
 	assert len(nOrbits) == len(correlation_energy)
 	return name, training_dim, nOrbits, correlation_energy
 
+##############################
+# RS = 1
+##############################
 def rs_1_N_10():
 	name = 'Electron_Gas_rs_1_N_10'
 	training_dim = 16
@@ -155,6 +198,9 @@ def rs_1_N_178():
 	assert len(nOrbits) == len(correlation_energy)
 	return name, training_dim, nOrbits, correlation_energy
 
+##############################
+# RS = 2
+##############################
 def rs_2_N_10():
 	name = 'Electron_Gas_rs_2_N_10'
 	training_dim = 16
