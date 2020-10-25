@@ -2,8 +2,8 @@
 # Simple RNN Example
 # Julie Butler Hartley
 # Date Created: October 22, 2020
-# Last Modified: October 22, 2020
-# Version 0.8.0
+# Last Modified: October 25, 2020
+# Version 1.0.0
 #
 # A code that utilizes a simple recurrent neural network from Keras and time series
 # forecasting data formatting to perform extrapolations.
@@ -29,13 +29,11 @@ from keras.layers import Input
 from keras.models import Model, Sequential
 from keras.layers.core import Dense, Activation 
 from keras.layers.recurrent import SimpleRNN
-# For timing purposes
-from timeit import default_timer as timer
 # For graphing
 import matplotlib.pyplot as plt
 
 # Changing the import directory
-sys.path.append('../../DataSets/')
+sys.path.append('../DataSets/')
 # LOCAL IMPORTS
 # Encoded data sets but can apply this code to any data set
 from Datesets import *
@@ -58,6 +56,10 @@ assert len(X_tot) == len(y_tot)
 ##############################
 # FORMAT_DATA
 ##############################
+# This is the method that takes the y data from the data set and formats it using sequential or time
+# series forcasting.  The method can format data using any length of sequence, but the rest of the 
+# code requires a sequence length of 2.  
+# FORMAT_DATA
 def format_data(data, length_of_sequence = 2):  
     """
         Inputs:
@@ -70,9 +72,12 @@ def format_data(data, length_of_sequence = 2):
                 dimensions are length of data - length of sequence, length of sequence, 
                 dimnsion of data
             rnn_output (a numpy array): the training data for the neural network
-        Formats data to be used in a recurrent neural network.
+        Formats data to be used in a recurrent neural network.  The resulting data points have the
+        following format for a sequence length of n: ((y1, y2, ..., yn), yn+1).  This function is 
+        adapted from the one found here: 
+        https://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/
     """
-
+    # To store the formated "x" and "y" data
     X, Y = [], []
     for i in range(len(data)-length_of_sequence):
         # Get the next length_of_sequence elements
@@ -83,9 +88,9 @@ def format_data(data, length_of_sequence = 2):
         a = np.reshape (a, (len(a), 1))
         X.append(a)
         Y.append(b)
+    # Convert into numpy arrays as these are easier to use later in the code.
     rnn_input = np.array(X)
     rnn_output = np.array(Y)
-
     return rnn_input, rnn_output
 
 ##############################
@@ -102,101 +107,125 @@ rnn_input, rnn_training = format_data(y_train, 2)
 # RNN
 ##############################
 def rnn(length_of_sequences, batch_size = None, stateful = False):
+    """
+        Inputs:
+            length_of_sequence (an int): the length of sequence used to format the training 
+                data (i.e. the length of the sequence used in format_data).
+            batch_size (an int): See Keras documentation for Input
+            stateful (a boolean): See Keras documentation for SimpleRNN
+        Returns:
+            model (a Keras model): the build and compiled recurrent neural network
+        Creates a simple recurrent neural network with one simple recurrent hidden layer with
+        200 hidden neurons and compiles the network using a mean-squared error loss function 
+        and an Adam's optimizer.
+    """
+    # Number of neurons in the input and output layer
     in_out_neurons = 1
+    # Number of neurons in the hidden layer
     hidden_neurons = 200
+    # Create the input layer
     inp = Input(batch_shape=(batch_size, 
                 length_of_sequences, 
                 in_out_neurons))  
+    # Create the simple recurrent hidden layer
     rnn = SimpleRNN(hidden_neurons, 
                     return_sequences=False,
                     stateful = stateful,
                     name="RNN")(inp)
+    # Create a dense (feedforward) neural network layer which will act as the output layer
     dens = Dense(in_out_neurons,name="dense")(rnn)
+    # Build the model
     model = Model(inputs=[inp],outputs=[dens])
+    # Compile the model using the specified loss function and optimizer
     model.compile(loss="mean_squared_error", optimizer="adam")  
     return model
-
-
 
 ##############################
 # CREATE THE RECURRENT NEURAL NETWORK
 ##############################
 ## use the default values for batch_size, stateful
 model = rnn(length_of_sequences = rnn_input.shape[1])
-#model.summary()
+# Print a summary of the Keras model to the console
+model.summary()
 
-start = timer()
+##############################
+# TRAIN THE RECURRENT NEURAL NETWORK
+##############################
+# Fit the model using the training data created above using 150 training iterations and a
+# validation split of 0.05
 hist = model.fit(rnn_input, rnn_training, batch_size=None, epochs=150, 
                  verbose=True,validation_split=0.05)
 
 
+##############################
+# LOSS FUNCTION GRAPH
+##############################
+# Creates a graph of the training loss/error and the validation loss/error as a function of the
+# number of training iterations performed.  This is useful to make sure the model is not 
+# overtraining.
+# Get the data from the trained model and plot it
+for label in ["loss","val_loss"]:
+    plt.plot(hist.history[label],label=label)
+# Label the x axis, the y axis, and add a title
+plt.ylabel("loss")
+plt.xlabel("epoch")
+plt.title("The final validation loss: {}".format(hist.history["val_loss"][-1]))
+# Add a legend then show the plot
+plt.legend()
+plt.show()
 
-#for label in ["loss","val_loss"]:
-#    plt.plot(hist.history[label],label=label)
-
-#plt.ylabel("loss")
-#plt.xlabel("epoch")
-#plt.title("The final validation loss: {}".format(hist.history["val_loss"][-1]))
-#plt.legend()
-#plt.show()
-
-def test_rnn (x1, y_test, plot_min, plot_max):
-    #y_pred = [y_test[0], y_test[1]]
-    #current_pred = np.array([[[y_test[0]], [y_test[1]]]])
-    #last = np.array([[y_test[1]]])
-    #for i in range (2, len(y_test)):
-    #    next = model.predict(current_pred)
-    #    y_pred.append(next)
-    #    current_pred = np.asarray([[last.flatten(), next.flatten()]])
-    #    last = next
-
-    #assert len(y_pred) == len(y_test)
-        
-    #plt.figure(figsize=(19,3))
-    #plt.plot([10, 10, 10], [1.5, 0, -1.5])
-
-    #X_test, a = format_data (y_test.copy(), 2)
-    #print X_test[0]
-    #y_pred = model.predict(X_test)
-
-    #x1 = x1[2:]
-    #y_test = y_test[2:]
-
-    y_pred = y_test[:dim].tolist()
+##############################
+# TEST_RNN
+##############################
+def test_rnn (x_known, y_known):
+    """
+        Inputs: 
+            x_known (a list or numpy array): the known x data, likely X_tot imported using
+                the data set.
+            y_known (a list or numpy array): the known y data, likely y_tot imported using
+                the data set.
+        Returns:
+            None.
+        Extrapolates from the training data to a complete data set using the trained recurrent
+        neural network.  Performs data analysis on the predicted data points and creates a graph
+        of the known data and the predicted data.
+    """
+    # Segment off the training data from the known data
+    y_pred = y_known[:dim].tolist()
+    # Create the first point that will be used to predict the following point using the trained
+    # recurrent neural network.  In this case the first point contains the two points if the 
+    # training data, so the first point that will be predicted is the first point to fall sequentially
+    # after the training data
     next_input = np.array([[[y_test[dim-2]], [y_test[dim-1]]]])
-    print(next_input)
+    # Save the last number in the prediction point for later use
     last = [y_test[dim-1]]
-
-    for i in range (dim, len(y_test)):
-        print ('ITER: ', i)
-        #print (type(next_input[0][0][0]))
+    # Loop until the predicted data set is the same length as the known data set.
+    for i in range (dim, len(y_known)):
+        # Predict the next point and add it to the predicted data set
         next = model.predict(np.asarray(next_input))
         y_pred.append(next[0][0])
-        #print(next)
-        print ('DIFF: ', next[0][0]-y_test[i])
+        # print the difference between the predicted point and the correspinding known point
+        print ('DIFF: ', next[0][0]-y_known[i])
+        # Create the point that will be uses to make a prediction on the next interation
         next_input = np.array([[last, next[0]]], dtype=np.float64)
         last = next
-        print(type(last))
-
-    print('MSE: ', np.square(np.subtract(y_test, y_pred)).mean())
+    # Print the MSE of the predicted data and the known data.  This is a measure of how well the 
+    # extrapolation worked.
+    print('MSE: ', np.square(np.subtract(y_known, y_pred)).mean())
+    # Save the predicted data set as a csv file for future use
     name = datatype + 'Predicted'+str(dim)+'.csv'
     np.savetxt(name, y_pred, delimiter=',')
+    # Plot both the known and the predicted data sets and add a legend
     fig, ax = plt.subplots()
-    ax.plot(x1, y_test, label="true", linewidth=3)
-    ax.plot(x1, y_pred, 'g-.',label="predicted", linewidth=4)
+    ax.plot(x_known, y_known, label="true", linewidth=3)
+    ax.plot(x_known, y_pred, 'g-.',label="predicted", linewidth=4)
     ax.legend()
-
-    ax.axvspan(plot_min, plot_max, alpha=0.25, color='red')
+    # Create a semi-transparent red box to represent the training data
+    ax.axvspan(x_known[0], x_known[dim], alpha=0.25, color='red')
     plt.show()
-    
-    #diff = y_test - y_pred.flatten()
-
-    #plt.plot(x1, diff, linewidth=4)
-    #plt.show()
-
-addition = 3
-
-test_rnn(X_tot, y_tot, X_tot[0], X_tot[dim-1])
-end = timer()
-print('Time: ', end-start)
-
+ 
+##############################
+# PREDICT NEW POINTS
+##############################
+# Predict the remaining points to finish the data set
+test_rnn(X_tot, y_tot)
