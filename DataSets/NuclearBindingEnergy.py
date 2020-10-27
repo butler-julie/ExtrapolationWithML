@@ -9,7 +9,7 @@ import os
 from pylab import plt, mpl
 
 def NuclearBindingEnergy ():
-    infile = open(data_path("MassEval2016.dat"),'r')
+    infile = open("MassEval2016.dat",'r')
     """                                                                                                                         
     This is taken from the data file of the mass 2016 evaluation.                                                               
     All files are 3436 lines long with 124 character per line.                                                                  
