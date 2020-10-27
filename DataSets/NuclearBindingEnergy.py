@@ -45,7 +45,6 @@ def NuclearBindingEnergy ():
     N = Masses['N']
     Element = Masses['Element']
     Energies = Masses['Ebinding']
-    print(Masses)
 
     # Now we set up the design matrix X
     X = np.zeros((len(A),5))
