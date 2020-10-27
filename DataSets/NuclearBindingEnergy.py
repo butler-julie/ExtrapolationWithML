@@ -1,3 +1,9 @@
+##################################################
+# Nuclear Binding Energy
+# Julie Butler Hartley
+# 
+##################################################
+
 # Common imports
 import numpy as np
 import pandas as pd
