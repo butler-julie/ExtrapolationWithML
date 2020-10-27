@@ -54,4 +54,4 @@ def NuclearBindingEnergy ():
     X[:,3] = A**(-1.0/3.0)
     X[:,4] = A**(-1.0)
     
-    return A, Energies, X
+    return np.asarray(A), np.asarray(Energies), X
