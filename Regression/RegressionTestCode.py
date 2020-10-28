@@ -32,19 +32,20 @@ from KernelRidgeRegression import KernelRidgeRegressionAnalysis
 # Support methods, including graphing capabilities
 from RegressionSupport import *
 # Changing the import directory
-sys.path.append('../../DataSets/')
+sys.path.append('../DataSets/')
 # Data sets (mostly physics related)
 from DataSets import *
 from ElectronGas import *
+from NuclearBindingEnergy import *
 
 
 #############################
 # BOOLEANS FOR REGRESSION ALGORITHM CHOICE
 #############################
 # True case is to perform that type of regression
-isLinearRegression = False
+isLinearRegression = True
 isRidgeRegression = True
-isKernelRidgeRegression = False
+isKernelRidgeRegression = True
 
 
 #############################
@@ -94,7 +95,9 @@ savename_prefix = 'VaryInteractionNegative_'
 # Numpy
 
 # IMPORTED DATA SET
-data_name, training_dim, X_tot, y_tot = rs_0_1_N_74()
+# data_name, training_dim, X_tot, y_tot = rs_0_1_N_74()
+X_tot, y_tot, design_matrix = NuclearBindingEnergy()
+training_dim = int(0.5*len(X_tot))
 #training_dim = 18
 # NUMPY GENERATED DATA SET
 #X_tot = np.arange(-1, 1, 0.01)
@@ -185,8 +188,8 @@ params_list_rr = [normalizes, alphas, solvers]
 # KERNEL RIDGE REGRESSION PARAMETERS
 #############################
 # Possible values of parameters for the kernel ridge regression algorithm
-kernels = ['polynomial', 'sigmoid']
-degrees = [1, 2, 3, 4]
+kernels = ['polynomial', 'sigmoid', 'rbf']
+degrees = np.arange(-5, 6, 0.5)
 alphas = np.logspace(-20, -10, 20)
 coef0s = np.arange(-5, 6, 1)
 gammas = np.logspace(-2, 2, 15)
