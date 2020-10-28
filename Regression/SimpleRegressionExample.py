@@ -5,7 +5,8 @@
 # Date Created: October 28, 2020
 # Last Modified: October 28, 2020
 #
-
+# A simple code to illustrate linear regression, ridge regression, and kernel
+# ridge regression with sequential formatting.
 #################################################
 
 #############################
