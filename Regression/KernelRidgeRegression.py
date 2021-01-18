@@ -666,7 +666,7 @@ class KernelRidgeRegressionAnalysis ():
             params_list_formatted = np.concatenate((params_list_polynomial, params_list_other))
 
         # Set up the variables to hold information about the best set of parameters
-        best_score = 100
+        best_score = 10e10
         best_model= []
         best_extrapolation = []
 

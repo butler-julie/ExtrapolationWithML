@@ -732,7 +732,7 @@ class RidgeRegressionAnalysis ():
     ##############################
     # TUNE SERIAL SEQ CR (SEQUENTIAL, CONTINUOUS RETRAIN)
     ##############################
-    def tune_serial_seq (self, params_list, X_train, y_train, dim, y_tot,
+    def tune_serial_seq_cr (self, params_list, X_train, y_train, dim, y_tot,
         verbose=True, isReturnBest = True, threshold = 0):
         """
             Inputs:
