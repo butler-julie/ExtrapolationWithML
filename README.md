@@ -6,5 +6,5 @@ Repository is currently under construction.  All codes contained within should w
 
 
 ## UNDER CONSTRUCTION
-* For an explanation of the codes pertaining to regression algorithms see [this file](Regression/RegressionCodes.md)
-* For an explanation of the codes pertaining to recurrent neural networks algorithms see [this file](RecurrentNeuralNetworks/RecurrentNeuralNetworkCodes.md)
+* For an explanation of the codes pertaining to regression algorithms see [this file](Regression/README.md)
+* For an explanation of the codes pertaining to recurrent neural networks algorithms see [this file](RecurrentNeuralNetworks/README.md)
