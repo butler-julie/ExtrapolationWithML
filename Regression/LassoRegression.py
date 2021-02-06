@@ -1,11 +1,11 @@
 #################################################
-# Ridge Regression
+# Lasso Regression
 # Julie Butler Hartley
 # Version 1.0.0
-# Date Created: July 14, 2020
-# Last Modified: July 14, 2020
+# Date Created: February 6, 2021
+# Last Modified: February 6, 2021
 #
-# A collection of methods for performing ridge regression of data sets, both with
+# A collection of methods for performing lasso regression of data sets, both with
 # and without time series formatting.
 #
 # TO DO
@@ -28,7 +28,7 @@ import numpy as np
 # Used for timing the running of codes
 import time
 # Ridge Methods
-from sklearn.linear_model.ridge import Ridge
+from sklearn.linear_model.lasso import Lasso
 # For plotting
 import matplotlib.pyplot as plt
 # Prevents extraneous printing of messages during a grid search
@@ -40,21 +40,21 @@ from itertools import product
 from RegressionSupport import *
 
 #################################################
-# KERNEL RIDGE REGRESSION
+# LASSO REGRESSION ANALYSIS
 #################################################
-class RidgeRegressionAnalysis ():
+class LassoRegressionAnalysis ():
 
     ##############################
     # INIT
     ##############################
     def __init__ (self):
-        print ("Ridge Regression instance started.")
+        print ("Lasso Regression instance started.")
 
     ##############################
     # STR
     ##############################
     def __str__ (self):
-        return "Instance of Ridge Regression class"
+        return "Instance of Lasso Regression class"
     ##################################################
     #
     # COMPLETE DATA SET IS KNOWN
@@ -72,7 +72,7 @@ class RidgeRegressionAnalysis ():
                 y_tot (a list of numpy array): the total set of data points (training plus validation)
                 training_dim (an int): the size of the traing data (i.e. the number of points
                     from y_tot that are used in the training)
-                params (a list): contains the parameters of the ridge regression 
+                params (a list): contains the parameters of the lasso regression 
                     algorithm.  In order: normalize, alpha, solver.
                 verbose (a boolean): True case: prints the MSE score of the extrapolated data
                     when compared to the true data.  Default value is true
@@ -80,7 +80,7 @@ class RidgeRegressionAnalysis ():
                 y_return (a list): the known points and the extrapolated data points
                 Unnamed (a float): the MSE error between the true data and the predicted
                     data
-            Performs ridge regression on the given data set using the given parameters
+            Performs lasso regression on the given data set using the given parameters
             and then extrapolates data points to get a complete data set.  Prints the MSE 
             score of the extrapolated data set compared to the true data set if desired and
             then returns the extrapolated data set.
@@ -89,7 +89,7 @@ class RidgeRegressionAnalysis ():
         # To ensure that all parameters are present 
         assert len(params)==3
         # Set up the model
-        r = Ridge (normalize=params[0], alpha=params[1], solver=params[2])    
+        r = Lasso (normalize=params[0], alpha=params[1], solver=params[2])    
 
         # Fit the model to the training data
         r.fit(X_train, y_train)
@@ -109,7 +109,7 @@ class RidgeRegressionAnalysis ():
 
         # Print the MSE error if needed
         if verbose:  
-            print ('RIDGE MSE VALUE: ', mse(y_tot, y_return))
+            print ('LASSO MSE VALUE: ', mse(y_tot, y_return))
 
         # Return the predicted points and the MSE error
         return y_return, mse(y_tot, y_return)
@@ -126,7 +126,7 @@ class RidgeRegressionAnalysis ():
                 y_tot (a list of numpy array): the total set of data points
                 training_dim (an int): the size of the traing data (i.e. the number of 
                     points from y_tot that are used in the training)
-                params (a list): contains the parameters of the ridge regression 
+                params (a list): contains the parameters of the lasso regression 
                     algorithm.  In order: normalize, alpha, and solver.
                 verbose (a boolean): True case: prints the MSE score of the extrapolated data
                     when compared to the true data.   
@@ -134,8 +134,8 @@ class RidgeRegressionAnalysis ():
                 y_return (a list): the known points and the extrapolated data points
                 Unnamed (a float): the MSE error between the true data and the predicted
                     data
-            Performs ridge regression on the given data set using the given parameters
-            and then extrapolates data points to get a complete data set. Ridge 
+            Performs lasso regression on the given data set using the given parameters
+            and then extrapolates data points to get a complete data set. Lasso
             regression is performed after each point is extrapolated to hopefully decrease 
             the average MSE score.  Prints the MSE score of the extrapolated data set 
             compared to the true data set if desired and then returns the extrapolated data
@@ -146,7 +146,7 @@ class RidgeRegressionAnalysis ():
         assert len(params)==3
 
         # Set up the model
-        r = Ridge (normalize=params[0], alpha=params[1], solver=params[2])
+        r = Lasso (normalize=params[0], alpha=params[1], solver=params[2])
 
         # Add the known training data to the predicted points list
         y_return = y_tot[:training_dim].tolist()
@@ -169,7 +169,7 @@ class RidgeRegressionAnalysis ():
 
         # Print the MSE error if needed
         if verbose:
-            print ('RIDGE CONTINUOUS RETRAIN MSE VALUE: ', mse(y_tot, y_return))
+            print ('LASSO CONTINUOUS RETRAIN MSE VALUE: ', mse(y_tot, y_return))
 
         # Return the predicted list
         return y_return, mse(y_tot, y_return)
@@ -185,7 +185,7 @@ class RidgeRegressionAnalysis ():
                 y_tot (a list of numpy array): the total set of data points (training plus validation)
                 training_dim (an int): the size of the traing data (i.e. the number of points
                     from y_tot that are used in the training)
-                params (a list): contains the parameters of the ridge regression 
+                params (a list): contains the parameters of the lasso regression 
                     algorithm.  In order: normalize, alpha, and solver.
                 verbose (a boolean): True case: prints the MSE score of the extrapolated data
                     when compared to the true data.
@@ -193,7 +193,7 @@ class RidgeRegressionAnalysis ():
                 y_return (a list): the known points and the extrapolated data points
                 Unnamed (a float): the MSE error between the true data and the predicted
                     data
-            Performs ridge regression on the given data set using the given parameters
+            Performs lasso regression on the given data set using the given parameters
             and then extrapolates data points to get a complete data set.  Prints the MSE 
             score of the extrapolated data set compared to the true data set if desired and
             then returns the extrapolated data set.
@@ -203,7 +203,7 @@ class RidgeRegressionAnalysis ():
         assert len(params)==3
 
         # Set up the model
-        r = Ridge (normalize = params[0], alpha = params[1], solver = params[2])    
+        r = Lasso (normalize = params[0], alpha = params[1], solver = params[2])    
 
         # Fit the model to the training data
         r.fit(X_train, y_train)
@@ -224,7 +224,7 @@ class RidgeRegressionAnalysis ():
 
         # Print the MSE error if needed
         if verbose:  
-            print ('RIDGE MSE VALUE: ', mse(y_tot, y_return))
+            print ('LASSO MSE VALUE: ', mse(y_tot, y_return))
 
         # Return the predicted points and the MSE error
         return y_return, mse(y_tot, y_return)
@@ -241,7 +241,7 @@ class RidgeRegressionAnalysis ():
                 y_tot (a list of numpy array): the total set of data points
                 training_dim (an int): the size of the traing data (i.e. the number of points
                     from y_tot that are used in the training)
-                params (a list): contains the parameters of the ridge regression 
+                params (a list): contains the parameters of the lasso regression 
                     algorithm.  In order: normalize, alpha, and solver.
                 verbose (a boolean): True case: prints the MSE score of the extrapolated data
                     when compared to the true data.
@@ -251,8 +251,8 @@ class RidgeRegressionAnalysis ():
                 y_return (a list): the known points and the extrapolated data points
                 Unnamed (a float): the MSE error between the true data and the predicted
                     data
-            Performs ridge regression on the given data set using the given parameters
-            and then extrapolates data points to get a complete data set. Ridge 
+            Performs lasso regression on the given data set using the given parameters
+            and then extrapolates data points to get a complete data set. Lasso
             regression is performed after each point is extrapolated to hopefully decrease 
             the average MSE score.  Prints the MSE score of the extrapolated data set 
             compared to the true data set if desired and then returns the extrapolated data
@@ -263,7 +263,7 @@ class RidgeRegressionAnalysis ():
         assert len(params)==3
 
         # Set up the model
-        r = Ridge (normalize = params[0], alpha = params[1], solver = params[2])
+        r = Lasso (normalize = params[0], alpha = params[1], solver = params[2])
 
         # Add the known training data to the predicted points list
         y_return = y_tot[:training_dim].tolist()
@@ -286,7 +286,7 @@ class RidgeRegressionAnalysis ():
 
         # Print the MSE error if needed
         if verbose:
-            print ('RIDGE CONTINUOUS RETRAIN MSE VALUE: ', mse(y_tot, y_return))
+            print ('LASSO CONTINUOUS RETRAIN MSE VALUE: ', mse(y_tot, y_return))
 
         # Return the predicted list
         return y_return, mse(y_tot, y_return)
@@ -308,7 +308,7 @@ class RidgeRegressionAnalysis ():
                 y_tot (a list of numpy array): the total set of data points (training plus validation)
                 training_dim (an int): the size of the traing data (i.e. the number of points
                     from y_tot that are used in the training)
-                params (a list): contains the parameters of the ridge regression 
+                params (a list): contains the parameters of the lasso regression 
                     algorithm.  In order: normalize, alpha, and solver.
                 verbose (a boolean): True case: prints the MSE score of the extrapolated data
                     when compared to the true data.
@@ -316,7 +316,7 @@ class RidgeRegressionAnalysis ():
                 y_return (a list): the known points and the extrapolated data points
                 Unnamed (a float): the MSE error between the true data and the predicted
                     data
-            Performs ridge regression on the given data set using the given parameters
+            Performs lasso regression on the given data set using the given parameters
             and then extrapolates data points to get a complete data set.  Prints the MSE 
             score of the extrapolated data set compared to the true data set if desired and
             then returns the extrapolated data set.
@@ -326,7 +326,7 @@ class RidgeRegressionAnalysis ():
         assert len(params)==3
 
         # Set up the model
-        r = Ridge (normalize = params[0], alpha = params[1], solver = params[2])    
+        r = Lasso (normalize = params[0], alpha = params[1], solver = params[2])    
 
         # Fit the model to the training data
         r.fit(X_train, y_train)
@@ -359,7 +359,7 @@ class RidgeRegressionAnalysis ():
                 y_tot (a list of numpy array): the total set of data points
                 training_dim (an int): the size of the traing data (i.e. the number of 
                     points from y_tot that are used in the training)
-                params (a list): contains the parameters of the ridge regression 
+                params (a list): contains the parameters of the lasso regression 
                     algorithm.  In order: normalize, alpha, and solver.
                 verbose (a boolean): True case: prints the MSE score of the extrapolated data
                     when compared to the true data.
@@ -369,8 +369,8 @@ class RidgeRegressionAnalysis ():
                 y_return (a list): the known points and the extrapolated data points
                 Unnamed (a float): the MSE error between the true data and the predicted
                     data
-            Performs ridge regression on the given data set using the given parameters
-            and then extrapolates data points to get a complete data set. Ridge 
+            Performs lasso regression on the given data set using the given parameters
+            and then extrapolates data points to get a complete data set. Lasso
             regression is performed after each point is extrapolated to hopefully decrease 
             the average MSE score.  Prints the MSE score of the extrapolated data set 
             compared to the true data set if desired and then returns the extrapolated data
@@ -381,7 +381,7 @@ class RidgeRegressionAnalysis ():
         assert len(params)==3
 
         # Set up the model
-        r = Ridge (normalize = params[0], alpha = params[1], solver = params[1])
+        r = Lasso (normalize = params[0], alpha = params[1], solver = params[1])
 
         # Add the known training data to the predicted points list
         y_return = y_known
@@ -432,7 +432,7 @@ class RidgeRegressionAnalysis ():
         assert len(params)==3
 
         # Set up the model
-        rr = Ridge (fit_intercept = params[0], normalize = params[1])
+        rr = Lasso (fit_intercept = params[0], normalize = params[1])
 
         # Fit the model to the training data
         rr.fit(X_train, y_train)
@@ -476,7 +476,7 @@ class RidgeRegressionAnalysis ():
                     including the number of training points
                 training_dim (an int): the size of the traing data (i.e. the number of points
                     from y_tot that are used in the training)
-                params (a list): contains the parameters of the ridge regression 
+                params (a list): contains the parameters of the lasso regression 
                     algorithm.  In order: normalize, alpha, and solver.
                 verbose (a boolean): True case: prints the MSE score of the extrapolated data
                     when compared to the true data.
@@ -484,8 +484,8 @@ class RidgeRegressionAnalysis ():
                     value is 2)    
             Returns:
                 y_return (a list): the known points and the extrapolated data points
-            Performs ridge regression on the given data set using the given parameters
-            and then extrapolates data points to get a complete data set. Ridge 
+            Performs lasso regression on the given data set using the given parameters
+            and then extrapolates data points to get a complete data set. Lasso
             regression is performed after each point is extrapolated to hopefully decrease 
             the average MSE score.  Prints the MSE score of the extrapolated data set 
             compared to the true data set if desired and then returns the extrapolated data
@@ -496,7 +496,7 @@ class RidgeRegressionAnalysis ():
         assert len(params)==3
 
         # Set up the model
-        r = Ridge (normalize = params[0], alpha = params[1], solver = params[2])
+        r = Lasso (normalize = params[0], alpha = params[1], solver = params[2])
 
         # Add the known training data to the predicted points list
         y_return = y_known.tolist()
@@ -572,7 +572,7 @@ class RidgeRegressionAnalysis ():
 
         # Loop through all possible combinations of parameters
         for params in params_list_formatted:
-            # Perform the ridge regression
+            # Perform the lasso regression
             y_return, mse_err = self.known_data (X_train, y_train, y_tot, dim, params, verbose=False)
             # If the current model is best, make it the new best model
             if mse_err < best_score:
@@ -588,8 +588,8 @@ class RidgeRegressionAnalysis ():
                 return best_models
         # If requested, print the best scores and parameters to the console
         if verbose:
-            print ('BEST RIDGE REGRESSION SCORE: ', best_score)
-            print ('BEST RIDGE REGRESSION PARAMETERS: ', best_model)
+            print ('BEST LASSO REGRESSION SCORE: ', best_score)
+            print ('BEST LASSO REGRESSION PARAMETERS: ', best_model)
 
         # If requested, add the best scores, models, and extrapolations to a list and then
         # return the best parameters and the list
@@ -635,7 +635,7 @@ class RidgeRegressionAnalysis ():
 
         # Loop through all possible combinations of parameters
         for params in params_list_formatted:
-            # Perform the ridge regression
+            # Perform the lasso regression
             y_return, mse_err = self.known_data_seq (X_train, y_train, y_tot, dim, params, verbose=False)
             # If the current model is best, make it the new best model
             if mse_err < best_score:
@@ -652,8 +652,8 @@ class RidgeRegressionAnalysis ():
 
         # If requested, print the best scores and parameters to the console
         if verbose:
-            print ('BEST RIDGE REGRESSION SCORE: ', best_score)
-            print ('BEST RIDGE REGRESSION PARAMETERS: ', best_model)
+            print ('BEST LASSO REGRESSION SCORE: ', best_score)
+            print ('BEST LASSO REGRESSION PARAMETERS: ', best_model)
 
         # If requested, add the best scores, models, and extrapolations to a list and then
         # return the best parameters and the list
@@ -699,7 +699,7 @@ class RidgeRegressionAnalysis ():
 
         # Loop through all possible combinations of parameters
         for params in params_list_formatted:
-            # Perform the ridge regression
+            # Perform the lasso regression
             y_return, mse_err = self.known_data_cr (X_train, y_train, y_tot, dim, params, verbose=False)
             # If the current model is best, make it the new best model
             if mse_err < best_score:
@@ -715,8 +715,8 @@ class RidgeRegressionAnalysis ():
                 return best_models
         # If requested, print the best scores and parameters to the console
         if verbose:
-            print ('BEST RIDGE REGRESSION SCORE: ', best_score)
-            print ('BEST RIDGE REGRESSION PARAMETERS: ', best_model)
+            print ('BEST LASSO REGRESSION SCORE: ', best_score)
+            print ('BEST LASSO REGRESSION PARAMETERS: ', best_model)
 
         # If requested, add the best scores, models, and extrapolations to a list and then
         # return the best parameters and the list
@@ -762,7 +762,7 @@ class RidgeRegressionAnalysis ():
 
         # Loop through all possible combinations of parameters
         for params in params_list_formatted:
-            # Perform the ridge regression
+            # Perform the lasso regression
             y_return, mse_err = self.known_data_cr_seq (X_train, y_train, y_tot, dim, params, verbose=False)
             # If the current model is best, make it the new best model
             if mse_err < best_score:
@@ -779,8 +779,8 @@ class RidgeRegressionAnalysis ():
 
         # If requested, print the best scores and parameters to the console
         if verbose:
-            print ('BEST RIDGE REGRESSION SCORE: ', best_score)
-            print ('BEST RIDGE REGRESSION PARAMETERS: ', best_model)
+            print ('BEST LASSO REGRESSION SCORE: ', best_score)
+            print ('BEST LASSO REGRESSION PARAMETERS: ', best_model)
 
         # If requested, add the best scores, models, and extrapolations to a list and then
         # return the best parameters and the list
